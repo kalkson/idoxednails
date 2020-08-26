@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyle from 'theme/GlobalStyle';
+import Header from 'layout/Header';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'theme/ThemeProvider';
+import NailList from 'nails/NailList';
+import SignIn from 'auth/SignIn';
+import NailDetails from 'nails/NailDetails';
+import CreateNails from 'nails/CreateNails';
+import Links from 'auth/Links';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Links />
+        <Header />
+        <Switch>
+          <Route exact path='/' component={NailList} />
+          <Route path='/signin' component={SignIn} />
+          <Route path='/naildetails/:id' component={NailDetails} />
+          <Route path='/create' component={CreateNails} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
